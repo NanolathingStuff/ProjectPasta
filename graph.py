@@ -13,16 +13,23 @@ try:
 except ImportError as e: #if 'xlrd' not in packages:
     os.system('pip install xlrd')
 try:
+    import matplotlib
+    matplotlib.use('GTK3Agg')
     import matplotlib.pyplot as plt
-except ImportError as e: #if 'matplotlib' not in packages:
+except ImportError as e: #if 'matplotlib' not in packages or dependency failed:
+    os.system('pip install pycairo')
+    os.system('pip install PyGObject')
     os.system('pip install matplotlib')
+    import matplotlib
+    matplotlib.use('GTK3Agg')
     import matplotlib.pyplot as plt
 
 #import control libraries
 import math 
 import datetime
 import array
-
+#
+from PIL import Image
 
 def graphs(dataframe): 
     title = dataframe.columns[0]
@@ -51,6 +58,7 @@ def graphs(dataframe):
     #pass #TODO
     #UserWarning: Matplotlib is currently using agg, which is a non-GUI backend, so cannot show the figure.
     # they say to use "tkinter"
+    #https://www.geeksforgeeks.org/graph-plotting-in-python-set-1/ for plotting more lines
 
 def main():
     df1 = pd.read_excel('ProjectPasta.xls', sheet_name="Foglio1")
