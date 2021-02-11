@@ -14,15 +14,25 @@ except ImportError as e: #if 'xlrd' not in packages:
     os.system('pip install xlrd')
 try:
     import matplotlib
-    matplotlib.use('GTK3Agg')
+    #matplotlib.use('GTK3Agg')
     import matplotlib.pyplot as plt
+    matplotlib.use('TkAgg')
 except ImportError as e: #if 'matplotlib' not in packages or dependency failed:
-    os.system('pip install pycairo')
-    os.system('pip install PyGObject')
+    #os.system('pip install pycairo')
+    #os.system('pip install PyGObject')
     os.system('pip install matplotlib')
     import matplotlib
-    matplotlib.use('GTK3Agg')
+    #matplotlib.use('GTK3Agg')
     import matplotlib.pyplot as plt
+    matplotlib.use('TkAgg')
+
+try:
+    from IPython import get_ipython
+    get_ipython().run_line_magic('matplotlib', 'qt') #get_ipython().run_line_magic('matplotlib', 'inline')
+except ImportError as e:
+    os.system('pip install IPython')
+    from IPython import get_ipython
+    get_ipython().run_line_magic('matplotlib', 'qt')
 
 #import control libraries
 import math 
