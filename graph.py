@@ -43,7 +43,7 @@ import array
 #
 from PIL import Image
 
-def graphs(dataframe): 
+def graph(dataframe): 
     title = dataframe.columns[0]
     print(title)
     #print(len(dataframe))
@@ -67,16 +67,41 @@ def graphs(dataframe):
     plt.plot(x_axis, y_axis)
     plt.title = title
     plt.show()
-    #pass #TODO
-    #UserWarning: Matplotlib is currently using agg, which is a non-GUI backend, so cannot show the figure.
-    # they say to use "tkinter"
-    #https://www.geeksforgeeks.org/graph-plotting-in-python-set-1/ for plotting more lines
+
+def graphs(dataframes): 
+    for d in dataframes:    #for i in len(dataframes):
+        title = d.columns[0]
+        data = plot_values(d.drop(d.columns[0], axis=1))
+        plt.plot(data[0], data[1], label = title) 
+    # naming the axis 
+    plt.xlabel('time to cook')  
+    plt.ylabel('type') 
+    # giving a title to my graph 
+    plt.title = 'Pastas time cooking' 
+    # show a legend on the plot and show it
+    plt.legend() 
+    plt.show() 
+        
+
+def plot_values(data):
+    x_axis = []
+    y_axis = []
+    for y in range(0, len(data.columns)):
+        for x in data.loc[ : , data.columns[y] ]:
+            x_axis.append(str(x)) 
+            y_axis.append(y)
+            #TODO check for empty value and sort
+            #TODO cut the first 2 '00'
+    return [x_axis, y_axis]
+    
 
 def main():
     df1 = pd.read_excel('ProjectPasta.xls', sheet_name="Foglio1")
     df2 = pd.read_excel('ProjectPasta.xls', sheet_name="Foglio2")
+    df3 = pd.read_excel('ProjectPasta.xls', sheet_name="Foglio3")
     #print(df1.to_string(),"\n", df2.to_string()) 
-    graphs(df1)
+    #graph(df1) #it works
+    graphs([df1, df2, df3]) #has TODOs
 
 
 if __name__ == "__main__":
