@@ -37,7 +37,7 @@ except ImportError as e:
     #get_ipython().run_line_magic('matplotlib', 'qt')
 
 #import control libraries
-import math 
+import numpy 
 import datetime
 import array
 #
@@ -88,10 +88,15 @@ def plot_values(data):
     y_axis = []
     for y in range(0, len(data.columns)):
         for x in data.loc[ : , data.columns[y] ]:
-            x_axis.append(str(x)) 
+            x_axis.append(x) 
             y_axis.append(y)
-            #TODO check for empty value and sort
-            #TODO cut the first 2 '00'
+        #TODO check for empty value and sort
+        #sorted_index_pos = [index for index, num in sorted(enumerate(x_axis), key=lambda x: x[-1])] #from https://stackoverflow.com/questions/50849300/sort-array-and-return-original-indexes-of-sorted-array/50849428
+        sort_index = numpy.argsort(x_axis) 
+        print(sort_index)
+        #TODO cut the first 2 '00'
+
+        [str(i) for i in x_axis]
     return [x_axis, y_axis]
     
 
@@ -101,7 +106,7 @@ def main():
     df3 = pd.read_excel('ProjectPasta.xls', sheet_name="Foglio3")
     #print(df1.to_string(),"\n", df2.to_string()) 
     #graph(df1) #it works
-    graphs([df1, df2, df3]) #has TODOs
+    graphs([df2]) #has TODOs
 
 
 if __name__ == "__main__":
