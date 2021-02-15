@@ -39,6 +39,7 @@ except ImportError as e:
 #import control libraries
 import numpy 
 import datetime
+import math
 import array
 #
 from PIL import Image
@@ -72,7 +73,7 @@ def graphs(dataframes):
     for d in dataframes:    #for i in len(dataframes):
         title = d.columns[0]
         data = plot_values(d.drop(d.columns[0], axis=1))
-        plt.plot(data[0], data[1], label = title) 
+        plt.plot(data[0], data[1], label = title) ###some error here
     # naming the axis 
     plt.xlabel('time to cook')  
     plt.ylabel('type') 
@@ -87,10 +88,12 @@ def plot_values(data):
     x_axis = []
     y_axis = []
     for y in range(0, len(data.columns)):
-        for x in data.loc[ : , data.columns[y] ]:
-            x_axis.append(x) 
-            y_axis.append(y)
-        #TODO check for empty value and sort
+        for x in data.loc[ : , data.columns[y] ]: 
+            if type(x) is datetime.time:# if not math.isnan(x):
+                x_axis.append(x) 
+                y_axis.append(y) #cooking grade
+                #print(type(x), x)
+        #TODO sort
         #sorted_index_pos = [index for index, num in sorted(enumerate(x_axis), key=lambda x: x[-1])] #from https://stackoverflow.com/questions/50849300/sort-array-and-return-original-indexes-of-sorted-array/50849428
         sort_index = numpy.argsort(x_axis) 
         print(sort_index)
@@ -106,7 +109,7 @@ def main():
     df3 = pd.read_excel('ProjectPasta.xls', sheet_name="Foglio3")
     #print(df1.to_string(),"\n", df2.to_string()) 
     #graph(df1) #it works
-    graphs([df2]) #has TODOs
+    graphs([df1, df2, df3]) #has TODOs
 
 
 if __name__ == "__main__":
