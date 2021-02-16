@@ -79,6 +79,7 @@ def graphs(dataframes):
     plt.ylabel('type') 
     # giving a title to my graph 
     plt.title = 'Pastas time cooking' 
+    #TODO single scale for y and y axis
     # show a legend on the plot and show it
     plt.legend() 
     plt.show() 
@@ -93,14 +94,16 @@ def plot_values(data):
                 x_axis.append(x) 
                 y_axis.append(y) #cooking grade
                 #print(type(x), x)
-        #TODO sort
+        #TODO sort (y to sort_index)
         #sorted_index_pos = [index for index, num in sorted(enumerate(x_axis), key=lambda x: x[-1])] #from https://stackoverflow.com/questions/50849300/sort-array-and-return-original-indexes-of-sorted-array/50849428
         sort_index = numpy.argsort(x_axis) 
         print(sort_index)
-        #TODO cut the first 2 '00'
 
-        [str(i) for i in x_axis]
-    return [x_axis, y_axis]
+        #[str(i) for i in x_axis]
+        x = [] #convert sorted x_axis to strings
+        for t in x_axis:
+            x.append(t.strftime("%M:%S")) #%H:
+    return [x, y_axis]
     
 
 def main():
