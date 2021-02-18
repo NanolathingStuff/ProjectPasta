@@ -1,6 +1,6 @@
 import os
 
-##Installing packages##
+##Installing packages
 #packages = os.system('pip freeze') #list')
 #print(type(packages)) 
 try:        
@@ -41,8 +41,6 @@ import numpy
 import datetime
 import math
 import array
-#
-from PIL import Image
 
 def graph(dataframe): 
     title = dataframe.columns[0]
@@ -73,13 +71,17 @@ def graphs(dataframes):
     for d in dataframes:    #for i in len(dataframes):
         title = d.columns[0]
         data = plot_values(d.drop(d.columns[0], axis=1))
-        plt.plot(data[0], data[1], label = title) ###some error here
+        #try>>> plot('xlabel', 'ylabel', data=obj)
+        plt.plot(data[0], data[1], label = title) ###some error here   
     # naming the axis 
     plt.xlabel('time to cook')  
     plt.ylabel('type') 
     # giving a title to my graph 
     plt.title = 'Pastas time cooking' 
     #TODO single scale for y and y axis
+    plt.xticks = numpy.linspace(0, 16, 16)
+    plt.yticks = numpy.linspace(0, 3, 3)
+    plt.axis = [0, 16, 0, 3] #axis constains
     # show a legend on the plot and show it
     plt.legend() 
     plt.show() 
@@ -94,16 +96,18 @@ def plot_values(data):
                 x_axis.append(x) 
                 y_axis.append(y) #cooking grade
                 #print(type(x), x)
-        #TODO sort (y to sort_index)
         #sorted_index_pos = [index for index, num in sorted(enumerate(x_axis), key=lambda x: x[-1])] #from https://stackoverflow.com/questions/50849300/sort-array-and-return-original-indexes-of-sorted-array/50849428
         sort_index = numpy.argsort(x_axis) 
-        print(sort_index)
+        #print(sort_index) #debug
 
         #[str(i) for i in x_axis]
-        x = [] #convert sorted x_axis to strings
+        x, y = [], [] #convert sorted x_axis to strings
         for t in x_axis:
             x.append(t.strftime("%M:%S")) #%H:
-    return [x, y_axis]
+        #sort (y to sort_index)
+        for i in sort_index:
+            y.append(y_axis[i])
+    return [x, y]
     
 
 def main():
@@ -112,9 +116,10 @@ def main():
     df3 = pd.read_excel('ProjectPasta.xls', sheet_name="Foglio3")
     #print(df1.to_string(),"\n", df2.to_string()) 
     #graph(df1) #it works
-    graphs([df1, df2, df3]) #has TODOs
+    graphs([df1, df2]) #has TODOs #, df3
 
 
 if __name__ == "__main__":
     # execute only if run as a script
     main()
+# %%
