@@ -68,21 +68,28 @@ def graph(dataframe):
     plt.show()
 
 def graphs(dataframes): 
+    xlabel, ylabel = numpy.arange(0, 16), numpy.array(["raw", "undercocked", "coocked", "overcoocked"])
+    #print(xlabel, type(xlabel))
+    #print(ylabel, type(ylabel))
     for d in dataframes:    #for i in len(dataframes):
         title = d.columns[0]
         data = plot_values(d.drop(d.columns[0], axis=1))
-        #try>>> plot('xlabel', 'ylabel', data=obj)
         plt.plot(data[0], data[1], label = title) ###some error here   
     # naming the axis 
-    plt.xlabel('time to cook')  
+    plt.xlabel('time to cook') 
+    plt.xticks(data[0], rotation='vertical') 
     plt.ylabel('type') 
+    yval = [ylabel[i] for i in data[1]] 
+    plt.yticks(data[1], yval) 
+    #print(len(data[1]), len(ylabel))
     # giving a title to my graph 
     plt.title = 'Pastas time cooking' 
     #TODO single scale for y and y axis
-    plt.xticks = numpy.linspace(0, 16, 16)
-    plt.yticks = numpy.linspace(0, 3, 3)
+    ##try>>> plot('xlabel', 'ylabel', data=obj)
     plt.axis = [0, 16, 0, 3] #axis constains
     # show a legend on the plot and show it
+    #for d in dataframes:
+        #plt.plot(xlabel, ylabel, data=d)
     plt.legend() 
     plt.show() 
         
@@ -116,7 +123,7 @@ def main():
     df3 = pd.read_excel('ProjectPasta.xls', sheet_name="Foglio3")
     #print(df1.to_string(),"\n", df2.to_string()) 
     #graph(df1) #it works
-    graphs([df1, df2]) #has TODOs #, df3
+    graphs([df1]) #has TODOs #, df2, df3
 
 
 if __name__ == "__main__":
