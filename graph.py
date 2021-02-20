@@ -74,13 +74,22 @@ def graphs(dataframes):
     for d in dataframes:    #for i in len(dataframes):
         title = d.columns[0]
         data = plot_values(d.drop(d.columns[0], axis=1))
-        plt.plot(data[0], data[1], label = title) ###some error here   
+        #TODO test data
+        zip(*data)
+        plt.scatter(*zip(*data), label = title)
+        #plt.plot(data[0], data[1], label = title) ###some error here   
     # naming the axis 
     plt.xlabel('time to cook') 
-    plt.xticks(data[0], rotation='vertical') 
+    plt.xticks(xlabel, rotation='vertical') 
     plt.ylabel('type') 
-    yval = [ylabel[i] for i in data[1]] 
-    plt.yticks(data[1], yval) 
+    #yval = [ylabel[i] for i in data[1]] 
+    yval = []
+    #print(len(data), type(data))
+    for i in range(0, len(data)):
+        #print(data[i][1], ylabel[data[i][1]])
+        #print(i)
+        yval.append(ylabel[data[i][1]])
+    plt.yticks(numpy.arange(4), ylabel) #plt.yticks(data[1], yval) 
     #print(len(data[1]), len(ylabel))
     # giving a title to my graph 
     plt.title = 'Pastas time cooking' 
@@ -114,7 +123,13 @@ def plot_values(data):
         #sort (y to sort_index)
         for i in sort_index:
             y.append(y_axis[i])
-    return [x, y]
+    #return [x, y]
+    ####TEST
+    d = []
+    for i in range(0, len(y_axis)):
+        d.append(tuple((x[i], y[i])) )
+    #print(d)
+    return d
     
 
 def main():
@@ -124,6 +139,9 @@ def main():
     #print(df1.to_string(),"\n", df2.to_string()) 
     #graph(df1) #it works
     graphs([df1]) #has TODOs #, df2, df3
+    #testList =[(0, 6), (1, 2), (2, 7), (3, 5), (4, 3), (5, 4)]
+    #plt.plot(testList)
+    #plt.show()
 
 
 if __name__ == "__main__":
