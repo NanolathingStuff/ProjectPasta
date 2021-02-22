@@ -148,3 +148,6 @@ if __name__ == "__main__":
     # execute only if run as a script
     main()
 # %%
+#TODO finish for 1 and many graph
+# vedi fin quando diventa incasinato
+# impara a scorrere tutti gli sheet nel xml
