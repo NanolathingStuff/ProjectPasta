@@ -76,11 +76,11 @@ def graphs(dataframes):
         data = plot_values(d.drop(d.columns[0], axis=1))
         #TODO test data
         zip(*data)
-        plt.scatter(*zip(*data), label = title)
+        plt.plot(*zip(*data), label = title)#plt.scatter(*zip(*data), label = title)
         #plt.plot(data[0], data[1], label = title) ###some error here   
     # naming the axis 
-    plt.xlabel('time to cook') 
-    plt.xticks(xlabel, rotation='vertical') 
+    plt.xlabel('time to cook') #TODO problems with  x label
+    plt.xticks(xlabel, rotation='vertical') # 
     plt.ylabel('type') 
     #yval = [ylabel[i] for i in data[1]] 
     yval = []
@@ -138,7 +138,7 @@ def main():
     df3 = pd.read_excel('ProjectPasta.xls', sheet_name="Foglio3")
     #print(df1.to_string(),"\n", df2.to_string()) 
     #graph(df1) #it works
-    graphs([df1]) #has TODOs #, df2, df3
+    graphs([df1, df2]) #has TODOs #, df3
     #testList =[(0, 6), (1, 2), (2, 7), (3, 5), (4, 3), (5, 4)]
     #plt.plot(testList)
     #plt.show()
