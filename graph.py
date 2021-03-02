@@ -1,5 +1,8 @@
 import os
-
+"""
+TODO https://stackoverflow.com/questions/1574088/plotting-time-in-python-with-matplotlib
+TODO https://www.google.com/search?client=firefox-b-d&q=python+converting+%3Cclass+%27datetime.time%27%3E+to+to+NumPy+datetime
+"""
 ##Installing packages
 #packages = os.system('pip freeze') #list')
 #print(type(packages)) 
@@ -102,7 +105,6 @@ def graphs(dataframes):
     plt.legend() 
     plt.show() 
         
-
 def plot_values(data):
     x_axis = []
     y_axis = []
@@ -133,15 +135,44 @@ def plot_values(data):
     
 
 def main():
-    df1 = pd.read_excel('ProjectPasta.xls', sheet_name="Foglio1")
-    df2 = pd.read_excel('ProjectPasta.xls', sheet_name="Foglio2")
-    df3 = pd.read_excel('ProjectPasta.xls', sheet_name="Foglio3")
+    df = pd.read_excel('ProjectPasta.xls', sheet_name=None) #The read_excel method of pandas lets you read all sheets in at once if you set the keyword parameter sheetname=None. 
+    #print(type(df), len(df), df) #This returns a dictionary - the keys are the sheet names, and the values are the sheets as dataframes. 
+    #df1 = pd.read_excel('ProjectPasta.xls', sheet_name="Foglio1")
+    #df2 = pd.read_excel('ProjectPasta.xls', sheet_name="Foglio2")
+    #df3 = pd.read_excel('ProjectPasta.xls', sheet_name="Foglio3")
     #print(df1.to_string(),"\n", df2.to_string()) 
     #graph(df1) #it works
-    graphs([df1, df2]) #has TODOs #, df3
+    #graphs([df1, df2]) #has TODOs #, df3
     #testList =[(0, 6), (1, 2), (2, 7), (3, 5), (4, 3), (5, 4)]
     #plt.plot(testList)
     #plt.show()
+    dataframes = [] #array of dataframes for every sheet in file
+    for d in df:
+        #print(type(df.get(d)), len(df.get(d)), df.get(d))
+        dataframes.append(df.get(d))
+    title = []
+    #data = []
+    x_axis = []
+    y_axis = []
+    for d in dataframes:    #for i in len(dataframes):
+        title.append(d.columns[0])   
+        line_X, line_y = [], []
+        for y in range(0, len(d.columns)):
+            for x in d.loc[ : , d.columns[y] ]: 
+                if type(x) is datetime.time:# if not math.isnan(x):
+                    #line.append( (x, y) ) 
+                    line_X.append(x) 
+                    print(x, type(x))
+                    line_y.append(y)
+        #dates = matplotlib.dates.date2num(line_X)
+        line_X.append(line_X)
+        line_y.append(line_y)
+        
+        #data.append(line)
+
+    #print(title, data)
+    #print(title[0], data[0])
+    #matplotlib.pyplot.plot_date(dates, y_axis)
 
 
 if __name__ == "__main__":
