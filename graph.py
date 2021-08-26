@@ -148,7 +148,7 @@ def main():
     #plt.show()
     dataframes = [] #array of dataframes for every sheet in file
     for d in df:
-        #print(type(df.get(d)), len(df.get(d)), df.get(d))
+        #print(df.get(d), type(df.get(d)), len(df.get(d)))
         dataframes.append(df.get(d))
     title = []
     #data = []
@@ -156,20 +156,34 @@ def main():
     y_axis = []
     for d in dataframes:    #for i in len(dataframes):
         title.append(d.columns[0])   
-        line_X, line_y = [], []
+        line_X, line_Y = [], []
         for y in range(0, len(d.columns)):
             for x in d.loc[ : , d.columns[y] ]: 
                 if type(x) is datetime.time:# if not math.isnan(x):
                     #line.append( (x, y) ) 
-                    line_X.append(x) 
-                    print(x, type(x))
-                    line_y.append(y)
+                    try:
+                        line_X.append(x.hour*3600+x.minute*60.0+x.second)
+                    except: 
+                        print("ERROR", x, type(x))
+                    line_Y.append("cruda" if y==1 else "al dente" if y==2 else "cotta")
         #dates = matplotlib.dates.date2num(line_X)
-        line_X.append(line_X)
-        line_y.append(line_y)
         
-        #data.append(line)
+        # TODO: sort by time and be sure line_X[i] correspond line_Y[i]
 
+        x_axis.append(line_X)
+        y_axis.append(line_Y)
+        #print(line_X, line_Y, len(line_X) == len(line_Y), type(line_X), type(line_Y))
+        #data.append(line)
+    #print(x_axis[0], y_axis[0], type(x_axis[0]), type(y_axis[0]), len(x_axis[0]) == len(y_axis[0]))
+    #plt.plot(x_axis[0], y_axis[0], label = "line 1", marker='o')
+    for i in range(3):#len(x_axis)):
+        plt.plot(x_axis[i], y_axis[i], label = title[i], marker='o')
+    plt.title('Cooking type pasta', fontsize=16)
+    plt.xlabel('Seconds')
+    plt.ylabel('Cooked grade')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
     #print(title, data)
     #print(title[0], data[0])
     #matplotlib.pyplot.plot_date(dates, y_axis)
